@@ -7,7 +7,7 @@ class Title(models.Model):
     en_name = models.CharField(max_length=300)
     alt_name = models.CharField(max_length=300, blank=True, null=True)
     description = models.TextField(blank=True)
-    tags = models.ManyToManyField('Tags', related_name='title_tags')
+    tags = models.ManyToManyField('Tags', related_name='title_tags', blank=True)
 
     class Meta:
         ordering = ('id',)
@@ -22,6 +22,12 @@ class Volume(models.Model):
     volume_price = models.IntegerField(default=0)
     volume_number = models.IntegerField()
 
+    class Meta:
+        ordering = ('-id', )
+
+    def __str__(self):
+        return f'Volume {self.volume_number}. {self.volume_name}'
+
 
 class Chapter(models.Model):
     volume = models.ForeignKey('Volume', on_delete=models.PROTECT, related_name='volume_chapters')
@@ -34,10 +40,16 @@ class Chapter(models.Model):
     class Meta:
         ordering = ('-id', )
 
+    def __str__(self):
+        return f'Chapter {self.chapter_number}'
+
 
 class Tags(models.Model):
     tag_name = models.CharField(max_length=300)
 
+    class Meta:
+        ordering = ('tag_name', '-id')
+
     def __str__(self):
-        return self.tag_name
+        return f"Tag {self.tag_name}"
 

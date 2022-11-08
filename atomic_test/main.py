@@ -10,7 +10,8 @@ async def send(session):
     global count
     try:
         async with session.get('http://127.0.0.1:8000/api/v1/chapters/1/') as response:
-            pass
+            result = await response.json()
+            print(result)
     finally:
         count += 1
 

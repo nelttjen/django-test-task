@@ -10,26 +10,24 @@ from .models import Title, Tags, Volume, Chapter
 from .serializers import TitleSerializer, SingleTitleSerializer, TagsSerializer, VolumeSerializer, ChapterSerializer
 from .pagination import LargeResultsSetPagination
 from .tasks import increase_view, increase_like
+from .test_data import create_test_items, create_random_titles, create_random_tags
 
 
 def add_test_titles(request, count):
     """Добавляет рандомные Title в бд"""
-    for _ in range(int(count)):
-        Title.objects.create(
-            ru_name=''.join(random.sample(string.ascii_letters, 20)),
-            en_name=''.join(random.sample(string.ascii_letters, 20)),
-            alt_name=''.join(random.sample(string.ascii_letters, 20)) if random.randint(0, 1) else None,
-            description=''.join(random.sample(string.ascii_letters, 20)) if random.randint(0, 1) else ''
-        )
+    create_random_titles(count)
     return HttpResponse('OK')
 
 
 def add_test_tags(request, count):
     """Добавляет рандомные Tags в бд"""
-    for _ in range(int(count)):
-        Tags.objects.create(
-            tag_name=''.join(random.sample(string.ascii_letters, 30))
-        )
+    create_random_tags(count)
+    return HttpResponse('OK')
+
+
+def add_test_data(request):
+    """Добавляет тестовые данные в бд"""
+    create_test_items()
     return HttpResponse('OK')
 
 

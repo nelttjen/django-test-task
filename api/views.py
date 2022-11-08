@@ -70,17 +70,19 @@ class SingleChapterView(generics.RetrieveAPIView, generics.CreateAPIView):
             increase_view.delay(pk)
             message = 'OK'
             response_data = serializer.data
+            status_code = 200
         except ObjectDoesNotExist:
             message = 'Chapter not exists'
             response_data = {}
+            status_code = 404
         except Exception:
             message = 'Internal server error'
             response_data = {}
-
+            status_code = 500
         return Response({
             'message': message,
             'data': response_data
-        })
+        }, status=status_code)
 
     def post(self, request, pk, *args, **kwargs):
         try:

@@ -17,7 +17,7 @@ class Title(models.Model):
 
 
 class Volume(models.Model):
-    volume_title = models.ForeignKey('Title', on_delete=models.PROTECT, related_name='volume_titles')
+    volume_title = models.ForeignKey('Title', on_delete=models.CASCADE, related_name='volume_titles')
     volume_name = models.CharField(max_length=300)
     volume_price = models.IntegerField(default=0)
     volume_number = models.IntegerField()
@@ -30,7 +30,7 @@ class Volume(models.Model):
 
 
 class Chapter(models.Model):
-    volume = models.ForeignKey('Volume', on_delete=models.PROTECT, related_name='volume_chapters')
+    volume = models.ForeignKey('Volume', on_delete=models.CASCADE, related_name='volume_chapters')
     chapter_number = models.IntegerField()
     chapter_content = models.TextField(blank=True)
 
@@ -51,5 +51,5 @@ class Tags(models.Model):
         ordering = ('tag_name', '-id')
 
     def __str__(self):
-        return f"Tag {self.tag_name}"
+        return f"Tag id {self.id}: {self.tag_name}"
 

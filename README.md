@@ -1,5 +1,8 @@
 # Тестовое задание
 
+## UPD 14.12.22
+Добавлена документация swagger с помощью drf_yasg
+
 ## Запуск проекта:
 1. pip install -r requirements.txt
 2. sudo docker run -d -p 6379:6379 redis

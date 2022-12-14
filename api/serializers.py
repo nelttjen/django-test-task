@@ -14,8 +14,7 @@ class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chapter
         fields = ('id', 'chapter_number', 'chapter_content', 'chapter_views_count', 'chapter_likes_count')
-
-
+        read_only_fields = ('chapter_number', 'chapter_content', 'chapter_views_count', 'chapter_likes_count')
 
 
 class VolumeSerializer(serializers.ModelSerializer):
@@ -44,3 +43,21 @@ class SingleTitleSerializer(serializers.ModelSerializer):
         model = Title
         fields = ('id', 'ru_name', 'en_name', 'alt_name', 'description', 'tags', 'volume_titles')
         ordering = ('id', 'ru_name', 'en_name', 'alt_name', 'description', 'tags', 'volume_titles')
+
+
+class SingleChapterGetSerializer(serializers.Serializer):
+    message = serializers.CharField(max_length=1000)
+    data = ChapterSerializer()
+
+
+class SingleChaprerGetErrorSerializer(serializers.Serializer):
+    message = serializers.CharField(max_length=1000)
+    data = serializers.JSONField(default={})
+
+
+class ChapterPostLikeSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    data = serializers.JSONField(read_only=True)
+
+class ChapterResponseLikeSerializer(serializers.Serializer):
+    message = serializers.CharField(max_length=1000)
